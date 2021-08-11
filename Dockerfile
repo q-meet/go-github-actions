@@ -1,33 +1,18 @@
-PROJECT_NAME := "github.com/cnych/go-github-actions"
-PKG := "$(PROJECT_NAME)"
-PKG_LIST := $(shell go list ${PKG}/... | grep -v /vendor/)
-GO_FILES := $(shell find . -name '*.go' | grep -v /vendor/ | grep -v _test.go)
+FROM golang:1.14-alpine AS builder
+# 按需安装依赖包
+# RUN  apk --update --no-cache add gcc libc-dev ca-certificates  
+# 设置Go编译参数
+ARG VERSION
+ARG COMMIT
+ARG BUILDTIME
+WORKDIR /app
+COPY . .
+RUN GOOS=linux go build -o main -ldflags "-X github.com/x-mod/build.version=${VERSION} -X github.com/x-mod/build.commit=${COMMIT} -X github.com/x-mod/build.date=${BUILDTIME}"
 
-.PHONY: all dep lint vet test test-coverage build clean
-
-all: build
-
-dep: ## Get the dependencies
-	@go mod download
-
-lint: ## Lint Golang files
-	@golint -set_exit_status ${PKG_LIST}
-
-vet: ## Run go vet
-	@go vet ${PKG_LIST}
-
-test: ## Run unittests
-	@go test -short ${PKG_LIST}
-
-test-coverage: ## Run tests with coverage
-	@go test -short -coverprofile cover.out -covermode=atomic ${PKG_LIST}
-	@cat cover.out >> coverage.txt
-
-build: dep ## Build the binary file
-	@go build -i -o build/main $(PKG)
-
-clean: ## Remove previous build
-	@rm -f ./build
-
-help: ## Display this help screen
-	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+# 第二阶段
+FROM  alpine
+# 安装必要的工具包
+RUN  apk --update --no-cache add tzdata ca-certificates \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+COPY --from=builder /app/main /usr/local/bin
+ENTRYPOINT [ "main" ]
