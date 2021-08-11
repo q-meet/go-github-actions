@@ -9,3 +9,7 @@ import (
 func main() {
 	fmt.Println(hello.Greet())
 }
+
+func w() string {
+	return hello.Greet()
+}
