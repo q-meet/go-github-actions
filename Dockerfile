@@ -1,18 +1,10 @@
-FROM golang:1.14-alpine AS builder
-# 按需安装依赖包
-# RUN  apk --update --no-cache add gcc libc-dev ca-certificates  
-# 设置Go编译参数
-ARG VERSION
-ARG COMMIT
-ARG BUILDTIME
-WORKDIR /app
-COPY . .
-RUN GOOS=linux go build -o main -ldflags "-X github.com/x-mod/build.version=${VERSION} -X github.com/x-mod/build.commit=${COMMIT} -X github.com/x-mod/build.date=${BUILDTIME}"
+FROM golang:1.15 AS builder
+ARG VERSION=0.0.10
+WORKDIR /go/src/app
+COPY main.go .
+RUN go build -o main -ldflags="-X 'main.version=${VERSION}'" main.go
 
-# 第二阶段
-FROM  alpine
-# 安装必要的工具包
-RUN  apk --update --no-cache add tzdata ca-certificates \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-COPY --from=builder /app/main /usr/local/bin
-ENTRYPOINT [ "main" ]
+FROM debian:stable-slim
+COPY --from=builder /go/src/app/main /go/bin/main
+ENV PATH="/go/bin:${PATH}"
+CMD ["main"]
