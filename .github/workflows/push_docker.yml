@@ -14,5 +14,5 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: meetdocker2020/docker-githubaction
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_USER_NAME }}
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
