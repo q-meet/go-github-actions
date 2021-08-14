@@ -19,7 +19,7 @@ func TestGetVersion1(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := GetVersion(); got != tt.want {
-				t.Errorf("GetVersion() = %v, want-v %v", got, tt.want)
+				t.Errorf("GetVersion() = %v, want-v2 %v", got, tt.want)
 			}
 		})
 	}
