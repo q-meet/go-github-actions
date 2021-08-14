@@ -40,7 +40,7 @@ jobs:
 
       - name: Build and push Docker images
         id: docker_build
-        uses: docker/build-push-action@v2.3.0
+        uses: meetdocker2020/build-push-action@v2.3.0
         with:
           push: true
           tags: |

@@ -31,6 +31,6 @@ jobs:
     - name: Publish to Docker Repository
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: meetdocker2020/docker-githubaction
+        name: meetdocker2020/docker-githubaction-2
         username: ${{ secrets.DOCKER_USER_NAME }}
         password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
