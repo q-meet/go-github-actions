@@ -1,12 +1,10 @@
-FROM golang:1.16 AS builder
-ENV GOPROXY https://goproxy.cn,direct
+FROM golang:1.15 AS builder
 ARG VERSION=0.0.10
-WORKDIR $GOPATH/src/app
-COPY . $GOPATH/src/app
-# RUN go build -o main main.go
+WORKDIR /go/src/app
+COPY . .
 RUN go build -o main -ldflags="-X 'main.version=${VERSION}'" main.go
 
 FROM debian:stable-slim
-COPY main $GOPATH/src/app/main 
+COPY --from=builder /go/src/app/main /go/bin/main
 ENV PATH="/go/bin:${PATH}"
 CMD ["main"]
