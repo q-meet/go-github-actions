@@ -26,3 +26,11 @@ jobs:
 
     - name: Test Hello
       run: go test ./hello -v ./...
+
+    - uses: actions/checkout@master
+    - name: Publish to Docker Repository
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: meetdocker2020/docker-githubaction
+        username: ${{ secrets.DOCKER_USER_NAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}

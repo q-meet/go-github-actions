@@ -1,18 +1,18 @@
-name: Build and Publish Docker
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Publish to Docker Repository
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: meetdocker2020/docker-githubaction
-          username: ${{ secrets.DOCKER_USER_NAME }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+#name: Build and Publish Docker
+#
+#on:
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@master
+#      - name: Publish to Docker Repository
+#        uses: elgohr/Publish-Docker-Github-Action@master
+#        with:
+#          name: meetdocker2020/docker-githubaction
+#          username: ${{ secrets.DOCKER_USER_NAME }}
+#          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
