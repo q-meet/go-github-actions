@@ -17,6 +17,6 @@ func main() {
 	fmt.Println(GetVersion())
 }
 
-func w() string {
+func w1() string {
 	return hello.Greet()
 }
