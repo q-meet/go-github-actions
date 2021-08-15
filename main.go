@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"go-github-actions/hello"
+	"github.com/q-meet/go-github-actions/hello"
 )
 
 var version = "0.0.1"
