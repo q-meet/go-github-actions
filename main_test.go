@@ -3,7 +3,7 @@ package main
 import "testing"
 
 func TestW(t *testing.T) {
-	res := w()
+	res := w1()
 	if res != "Hello GitHub Actions. qikqiak.com is awesome1" {
 		t.Errorf("Greet() = %s; Expected Hello GitHub Actions. qikqiak.com is awesome1", res)
 	}
